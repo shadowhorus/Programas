@@ -11,6 +11,8 @@ printf("\n\n Ingrese el numero a convertir : ");
 scanf("%ld",&Dec);
 convertidor(Dec,Bin);
 printf("\n El numero en Binario de: %ld es %s \n",Dec,Bin);
+convertidor(~Dec,Bin);
+printf("\nSu complemento a1 es: %s ",Bin);
 
 getchar(); // trap enter
 getchar(); // wait
