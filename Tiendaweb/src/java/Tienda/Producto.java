@@ -18,4 +18,18 @@ public class Producto{
 		lista.add(new Producto("Mexicana", "Hecha con queso, frijoles y Chile de arbol",(float)200.50));
 		return;
 	}
+	public static String imprimirLista(ArrayList<Producto> lista){
+
+		Iterator<Producto> iterador = lista.iterator();
+		String salida="";
+		salida.concat("<ul>");
+		while(iterador.hasNext())
+		{
+		Producto elemento = iterador.next();
+
+	untitled	salida=salida+"<li>"+elemento.nombre+"</li>"+"<li>"+elemento.descripcion+"</li>"+"<li>"+Float.toString(elemento.precio)+" pesos"+"</li>";
+		}
+		salida=salida+"</ul>";
+		return salida;
+	}
 }
