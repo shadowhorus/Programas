@@ -14,6 +14,7 @@
     </head>
     <body>
         <h1>Bienvenido a la tienda de compras</h1>
+        <h2> Menu</h2>
         <%
         String dinero;
         Integer money= 1;
@@ -31,18 +32,23 @@
         dinero= (String)request.getSession().getAttribute("Dinero");
         if(dinero==null){
         dinero= request.getParameter("Dinero");
-        if(dinero!=null)
+        if(dinero!=null){
         money=Integer.parseInt(dinero);
+        }else{
+        money = -1;
+        }
+        
         }else{
         money=Integer.parseInt(dinero);
         }
        
-        if(money>0 && user!=null){
+        if(money>=0 && user!=null){
             ArrayList<Producto> lista=(ArrayList<Producto>)request.getSession().getAttribute("lista");
            if(lista == null){
             lista= new ArrayList<Producto>();
             Producto.creaLista(lista);
             request.getSession().setAttribute("lista", lista);
+            out.println( Producto.imprimirLista(lista));
            }else{
            out.println( Producto.imprimirLista(lista));
            }
@@ -55,7 +61,10 @@
            if (compra!=null){
                for(int i=0; i<lista.size();i++){
                if(compra.equals(lista.get(i).getNombre())){
+                   if(lista.get(i).getPrecio()<money){
                    Producto.añadirCompra(lista.get(i), carrito);
+                   money=money-lista.get(i).getPrecio();
+                   }
                    break;
                }else{}
                }
@@ -64,6 +73,7 @@
            if(borra!=null){
            for(int i=0; i<carrito.size();i++){
                if(borra.equals(carrito.get(i).getNombre())){
+                   money=money+carrito.get(i).getPrecio();
                    carrito.remove(i);
                    break;
                }else{}
@@ -76,7 +86,7 @@
         
         %>
         <div>
-            Añadir compra a 
+            Añadir compra
            <form action="compras.jsp" method="POST">
                <%
                 out.println(Producto.imprimirOpciones(lista,"compra"));
@@ -87,8 +97,17 @@
                %>
                <input type="submit" value="agregar">
            </form> 
+               <br> Borrar compra
+               <form action="compras.jsp" method="POST">
+                   <%
+                   out.println(Producto.imprimirOpciones(carrito,"borra"));
+                   %>
+                   <input type="submit" value="borrar">
+               </form>
   <%
+                
             out.println("<div>");
+            out.println("<h2> Tu carrito: dinero restante "+money+" </h2>");
            out.println(Producto.imprimirLista(carrito));
            out.println("</div>");
         }else{
@@ -96,7 +115,9 @@
         }
   
   %>   
-           
+  <form action="terminar.jsp" method="GET">
+      <input type="submit" value="enviar">
+  </form> 
         </div>
     </body>
 </html>
