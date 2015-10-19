@@ -32,4 +32,16 @@ public class Producto{
 		salida=salida+"</ul>";
 		return salida;
 	}
+
+	public static String imprimirOpciones(ArrayList<Producto> lista,String nombre){
+		Iterator<Producto> iterador = lista.iterator();
+		String salida= " ";
+		salida=salida+"<select name='"+nombre+"'>";
+		while (iterador.hasNext()) {
+            Producto elemento = iterador.next();
+			salida=salida+"<option>"+elemento.nombre+"</option>";
+		}
+		salida=salida+"</select>";
+                return salida;
+	}
 }
