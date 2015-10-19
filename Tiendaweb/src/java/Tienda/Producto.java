@@ -44,4 +44,7 @@ public class Producto{
 		salida=salida+"</select>";
                 return salida;
 	}
+	public static void añadirCompra(Producto compra,ArrayList<Producto> lista){
+			lista.add(compra);
+	}
 }
